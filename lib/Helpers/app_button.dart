@@ -13,6 +13,7 @@ class AppButton {
       TextAlign? textAlign,
       Color? textColor,
       double? fontSize,
+      String? image,
       GestureTapCallback? onTap,
       FontWeight? fontWeight,
       FontStyle? fontStyle,
@@ -30,24 +31,36 @@ class AppButton {
         alignment: Alignment.center,
         padding: padding,
         width: width ?? ScreenSize(context).width,
-        height: height ?? 60,
+        height: height ?? 40,
         decoration: BoxDecoration(
             color: backgroundColor ?? AppTheme.appColor,
-            borderRadius: BorderRadius.circular(radius ?? 10),
+            borderRadius: BorderRadius.circular(radius ?? 8),
             border: border == false
                 ? null
                 : Border.all(
                     color: borderColor ?? AppTheme.appColor, width: 1)),
-        child: AppText.appText(text,
-            fontSize: fontSize ?? 20,
-            textAlign: textAlign,
-            fontWeight: fontWeight ?? FontWeight.w600,
-            textColor: textColor ?? AppTheme.white,
-            overflow: overflow,
-            letterSpacing: letterSpacing,
-            textBaseline: textBaseline,
-            fontStyle: fontStyle,
-            underLine: underLine),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            image == null
+                ? SizedBox.shrink()
+                : Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: Image(image: AssetImage(image,), height: 16,),
+                ),
+                
+            AppText.appText(text,
+                fontSize: fontSize ?? 14,
+                textAlign: textAlign,
+                fontWeight: fontWeight ?? FontWeight.w500,
+                textColor: textColor ?? AppTheme.white,
+                overflow: overflow,
+                letterSpacing: letterSpacing,
+                textBaseline: textBaseline,
+                fontStyle: fontStyle,
+                underLine: underLine),
+          ],
+        ),
       ),
     );
   }

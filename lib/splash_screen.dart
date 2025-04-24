@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ustaad/Helpers/pref_keys.dart';
+import 'package:ustaad/Helpers/utils.dart';
+import 'package:ustaad/Screens/Authentication/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -49,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen>
         // pushReplacement(context, const BottomNavView());
       } else {
         // ignore: use_build_context_synchronously
-        // pushReplacement(context, const SignInScreen());
+        pushReplacement(context, const LoginPage());
       }
     });
   }
@@ -61,10 +63,21 @@ class _SplashScreenState extends State<SplashScreen>
       body: Center(
         child: ScaleTransition(
           scale: _animation,
-          child: Image.asset(
-            'assets/images/logo.png',
-            height: 150,
-          ), // Replace with your logo
+          child: SizedBox(
+            height: 200,
+            child: Column(
+              children: [
+                Image.asset(
+                  'assets/images/logo.png',
+                  height: 150,
+                ),
+                Image.asset(
+                  'assets/images/ustaad.png',
+                  height: 50,
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
