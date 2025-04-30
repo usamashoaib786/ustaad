@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ustaad/Helpers/app_text.dart';
 import 'package:ustaad/Helpers/app_theme.dart';
 
 class CustomAppTextField extends StatefulWidget {
@@ -7,12 +6,14 @@ class CustomAppTextField extends StatefulWidget {
   final TextEditingController? controller;
   final bool isPasswordField;
   final bool obscureText;
+  final double? width;
   final TextInputType? txtType;
   final bool? border;
   final Color? bgcolor;
   final Color? cursorColor;
   final TextStyle? hintStyle;
   final Widget? prefixIcon;
+  final Widget? suffix;
   final ValueChanged<String>? onChanged;
 
   const CustomAppTextField({
@@ -28,6 +29,8 @@ class CustomAppTextField extends StatefulWidget {
     this.hintStyle,
     this.prefixIcon,
     this.onChanged,
+    this.suffix,
+    this.width,
   });
 
   @override
@@ -47,7 +50,7 @@ class _CustomAppTextFieldState extends State<CustomAppTextField> {
   Widget build(BuildContext context) {
     return Container(
       height: 40,
-      width: MediaQuery.of(context).size.width,
+      width: widget.width ?? MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         border: widget.border == false
             ? null
@@ -58,7 +61,6 @@ class _CustomAppTextFieldState extends State<CustomAppTextField> {
       child: TextFormField(
         controller: widget.controller,
         obscureText: _obscureText,
-        
         keyboardType: widget.txtType ?? TextInputType.name,
         cursorColor: widget.cursorColor ?? AppTheme.appColor,
         onChanged: widget.onChanged,
@@ -74,21 +76,22 @@ class _CustomAppTextFieldState extends State<CustomAppTextField> {
                 fontWeight: FontWeight.w400,
               ),
           prefixIcon: widget.prefixIcon,
-          suffixIcon: widget.isPasswordField
-              ? InkWell(
-                  onTap: () {
-                    setState(() {
-                      _obscureText = !_obscureText;
-                    });
-                  },
-                  child: Icon(
-                    _obscureText
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    color: AppTheme.appColor,
-                  ),
-                )
-              : null,
+          suffixIcon: widget.suffix ??
+              (widget.isPasswordField
+                  ? InkWell(
+                      onTap: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                      child: Icon(
+                        _obscureText
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        color: AppTheme.appColor,
+                      ),
+                    )
+                  : null),
         ),
       ),
     );

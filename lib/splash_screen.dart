@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen>
         // pushReplacement(context, const BottomNavView());
       } else {
         // ignore: use_build_context_synchronously
-        pushReplacement(context, const LoginPage());
+        pushReplacement(context, const LogInScreen());
       }
     });
   }

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class AppTheme {
   AppTheme._();
 
-  static Color txtColor = const Color.fromARGB(255, 50, 45, 45);
+  static Color lighttxtColor = const Color(0xff101219);
   static Color hintColor = const Color(0xffB0B0B0);
+  static Color button2ndCOlor = const Color(0xffECEEF3);
   static Color grey = const Color(0xff6C7278);
   // static Color txtColor = const Color(0xff6B6B6B);
   static Color appColor = const Color(0xff4BB698);
