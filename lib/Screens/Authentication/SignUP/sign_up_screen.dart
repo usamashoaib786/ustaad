@@ -1,4 +1,3 @@
-import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:password_strength_indicator/password_strength_indicator.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';

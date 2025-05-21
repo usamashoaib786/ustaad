@@ -7,6 +7,8 @@ class CustomAppTextField extends StatefulWidget {
   final bool isPasswordField;
   final bool obscureText;
   final double? width;
+  final double? height;
+  final int? maxLines;
   final TextInputType? txtType;
   final bool? border;
   final Color? bgcolor;
@@ -30,7 +32,7 @@ class CustomAppTextField extends StatefulWidget {
     this.prefixIcon,
     this.onChanged,
     this.suffix,
-    this.width,
+    this.width, this.height, this.maxLines,
   });
 
   @override
@@ -49,7 +51,7 @@ class _CustomAppTextFieldState extends State<CustomAppTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
+      height:widget.height?? 40,
       width: widget.width ?? MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         border: widget.border == false
@@ -59,6 +61,7 @@ class _CustomAppTextFieldState extends State<CustomAppTextField> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: TextFormField(
+        maxLines: widget.maxLines?? 1,
         controller: widget.controller,
         obscureText: _obscureText,
         keyboardType: widget.txtType ?? TextInputType.name,
@@ -67,7 +70,7 @@ class _CustomAppTextFieldState extends State<CustomAppTextField> {
         decoration: InputDecoration(
           isDense: true,
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.all(5),
+          contentPadding :widget.height != null? const EdgeInsets.all(15) :const EdgeInsets.all(5),
           hintText: widget.texthint,
           hintStyle: widget.hintStyle ??
               TextStyle(

@@ -8,19 +8,21 @@ import 'package:ustaad/Helpers/utils.dart';
 import 'package:ustaad/Screens/Authentication/login_screen.dart';
 import 'package:ustaad/Screens/Authentication/SignUP/sign_up_screen.dart';
 
-Widget customLableField({lable, controller, isPassword = false}) {
+Widget customLableField({lable, controller, isPassword = false, hintText, fontSize,height,maxLines}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       AppText.appText("$lable",
-          fontSize: 14,
+          fontSize: fontSize??14,
           fontWeight: FontWeight.w500,
           textColor: AppTheme.lableText),
       SizedBox(
         height: 10,
       ),
       CustomAppTextField(
-        texthint: "$lable",
+        maxLines: maxLines,
+        height: height,
+        texthint: hintText ?? "$lable",
         controller: controller,
         isPasswordField: isPassword,
       )

@@ -1,7 +1,9 @@
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:provider/provider.dart';
 import 'package:ustaad/Helpers/app_theme.dart';
+import 'package:ustaad/Models/tutor_veirfy_provider.dart';
 import 'package:ustaad/splash_screen.dart';
 
 Future<void> main() async {
@@ -15,8 +17,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CalendarControllerProvider(
-      controller: EventController(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => FileProvider(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

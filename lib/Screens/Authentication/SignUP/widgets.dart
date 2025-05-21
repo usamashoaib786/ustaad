@@ -9,7 +9,7 @@ import 'package:ustaad/Helpers/screen_size.dart';
         AppText.appText("Must contain at least:",
             fontSize: 12, fontWeight: FontWeight.w400),
         requirement("At least 8 characters"),
-        requirement("At least one Capital letter"),
+        requirement("At least one Capital letter"),   
         requirement("At least one number or symbol"),
       ],
     );

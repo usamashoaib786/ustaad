@@ -4,7 +4,7 @@ import 'package:ustaad/Helpers/app_text.dart';
 import 'package:ustaad/Helpers/app_theme.dart';
 import 'package:ustaad/Helpers/utils.dart';
 import 'package:ustaad/Screens/Authentication/auth_widgets.dart';
-import 'package:ustaad/Screens/Teacher%20Screens/0nBoard%20Screens/tutor_onBoard.dart';
+import 'package:ustaad/Screens/BottomNavBar/bottom_bar.dart';
 
 class LogInScreen extends StatelessWidget {
   const LogInScreen({super.key});
@@ -52,7 +52,7 @@ class LogInScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 30.0),
                     child: AppButton.appButton("Sign In", context: context,
                         onTap: () {
-                      pushReplacement(context, TutorOnboardScreen());
+                      pushReplacement(context, BottomNavView());
                     }, backgroundColor: AppTheme.primaryCOlor),
                   ),
                   loginDivider(),

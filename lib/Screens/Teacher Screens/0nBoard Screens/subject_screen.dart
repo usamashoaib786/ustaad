@@ -4,10 +4,10 @@ import 'package:ustaad/Helpers/app_field.dart';
 import 'package:ustaad/Helpers/app_text.dart';
 import 'package:ustaad/Helpers/app_theme.dart';
 import 'package:ustaad/Helpers/screen_size.dart';
-import 'package:ustaad/Screens/Authentication/SignUP/widgets.dart';
 
 class SubjectSelectionScreen extends StatefulWidget {
-  const SubjectSelectionScreen({super.key});
+  final Function()? onTap;
+  const SubjectSelectionScreen({super.key, this.onTap});
 
   @override
   State<SubjectSelectionScreen> createState() => _SubjectSelectionScreenState();
@@ -167,17 +167,17 @@ class _SubjectSelectionScreenState extends State<SubjectSelectionScreen> {
             ),
           ),
 
-          // Proceed Button
-
           AppButton.appButton("Proceed",
               context: context,
-              onTap: selectedSubjects.isEmpty
-                  ? null
-                  : () {
-                      // Handle next step
-                    },
+              onTap: selectedSubjects.isEmpty ? null : widget.onTap,
+              textColor: selectedSubjects.isEmpty
+                  ? AppTheme.lighttxtColor
+                  : AppTheme.white,
+                  border: false,
               height: 52,
-              backgroundColor: AppTheme.primaryCOlor)
+              backgroundColor: selectedSubjects.isEmpty
+                  ? const Color.fromARGB(255, 219, 215, 215)
+                  : AppTheme.primaryCOlor)
         ],
       ),
     );
