@@ -14,6 +14,7 @@ class AppText {
       int? maxlines,
       double? letterSpacing,
       bool underLine = false,
+      Color? decorationColor,
       bool fontFamily = false}) {
     return Text(
       softWrap: softWrap,
@@ -29,7 +30,7 @@ class AppText {
           overflow: overflow,
           fontStyle: fontStyle,
           textBaseline: textBaseline,
-          decorationColor: AppTheme.appColor,
+          decorationColor: decorationColor ?? AppTheme.appColor,
           decoration: underLine == false
               ? TextDecoration.none
               : TextDecoration.underline),

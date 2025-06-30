@@ -1,78 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:country_picker/country_picker.dart';
-import 'package:ustaad/Helpers/app_text.dart';
-import 'package:ustaad/Helpers/app_theme.dart';
 
 class CountryPickerField extends StatefulWidget {
-  const CountryPickerField({super.key});
+  final Function(String) onCountrySelected; // pass callback to parent
+
+  const CountryPickerField({super.key, required this.onCountrySelected});
 
   @override
   State<CountryPickerField> createState() => _CountryPickerFieldState();
 }
 
 class _CountryPickerFieldState extends State<CountryPickerField> {
-  Country selectedCountry = Country(
-    phoneCode: "92",
-    countryCode: "PK",
-    e164Sc: 0,
-    geographic: true,
-    level: 1,
-    name: "Pakistan",
-    example: "Pakistan",
-    displayName: "Pakistan",
-    displayNameNoCountryCode: "Pakistan",
-    e164Key: "",
-  );
+  Country _selected = Country.parse("PK"); // default to Pakistan
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppText.appText("Country",
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            textColor: AppTheme.lableText),
+        const Text("Country"),
         const SizedBox(height: 8),
         GestureDetector(
           onTap: () {
             showCountryPicker(
               context: context,
               showPhoneCode: true,
-              countryListTheme: CountryListThemeData(
-                borderRadius: BorderRadius.circular(16),
-                inputDecoration: InputDecoration(
-                  labelText: 'Search',
-                  hintText: 'Start typing to search',
-                  border: OutlineInputBorder(),
-                ),
-              ),
               onSelect: (Country country) {
                 setState(() {
-                  selectedCountry = country;
+                  _selected = country;
                 });
+                widget.onCountrySelected(country.name); // update parent
               },
             );
           },
           child: Container(
-            height: 40,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.grey.shade400),
             ),
             child: Row(
               children: [
-                Text(selectedCountry.flagEmoji,
-                    style: const TextStyle(fontSize: 20)),
-                const SizedBox(width: 12),
+                Text(_selected.flagEmoji),
+                const SizedBox(width: 8),
                 Expanded(
-                  child: Text(
-                    '${selectedCountry.name} (${selectedCountry.countryCode.toLowerCase()})',
-                    style: const TextStyle(color: Colors.black87),
-                  ),
+                  child: Text(_selected.name),
                 ),
                 const Icon(Icons.arrow_drop_down),
               ],

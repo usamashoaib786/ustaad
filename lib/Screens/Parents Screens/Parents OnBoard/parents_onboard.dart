@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:ustaad/Screens/Authentication/SignUP/widgets.dart';
-import 'package:ustaad/Screens/Teacher%20Screens/0nBoard%20Screens/bank_selection.dart';
-import 'package:ustaad/Screens/Teacher%20Screens/0nBoard%20Screens/data_model.dart';
+import 'package:ustaad/Screens/Parents%20Screens/Parents%20OnBoard/add_payment.dart';
+import 'package:ustaad/Screens/Parents%20Screens/Parents%20OnBoard/child_profile.dart';
 import 'package:ustaad/Screens/Teacher%20Screens/0nBoard%20Screens/doc_verification.dart';
-import 'package:ustaad/Screens/Teacher%20Screens/0nBoard%20Screens/subject_screen.dart';
 
-class TutorOnboardScreen extends StatefulWidget {
-  const TutorOnboardScreen({super.key});
+class ParentsOnboardScreen extends StatefulWidget {
+  const ParentsOnboardScreen({super.key});
 
   @override
-  State<TutorOnboardScreen> createState() => _TutorOnboardScreenState();
+  State<ParentsOnboardScreen> createState() => _ParentsOnboardScreenState();
 }
 
-class _TutorOnboardScreenState extends State<TutorOnboardScreen>
+class _ParentsOnboardScreenState extends State<ParentsOnboardScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  late TutorOnboardData onboardData;
   int currentStep = 0;
   @override
   void initState() {
     super.initState();
 
     _tabController = TabController(length: 3, vsync: this);
-    onboardData = TutorOnboardData();
   }
 
   @override
@@ -35,9 +32,9 @@ class _TutorOnboardScreenState extends State<TutorOnboardScreen>
               padding: const EdgeInsets.all(20),
               child: Row(
                 children: [
-                  stepIndicator("Subjects", 0, context,
+                  stepIndicator("Profile", 0, context,
                       controller: _tabController),
-                  stepIndicator("Banks", 1, context,
+                  stepIndicator("Payment", 1, context,
                       controller: _tabController),
                   stepIndicator("Verifications", 2, context,
                       controller: _tabController),
@@ -47,9 +44,9 @@ class _TutorOnboardScreenState extends State<TutorOnboardScreen>
             Expanded(
               child: TabBarView(
                 controller: _tabController,
+               // so user can only go forward by button
                 children: [
-                  SubjectSelectionScreen(
-                    onboardData: onboardData,
+                  ParentChildProfile(
                     onTap: () {
                       if (_tabController.index < 2) {
                         setState(() {
@@ -58,8 +55,7 @@ class _TutorOnboardScreenState extends State<TutorOnboardScreen>
                       }
                     },
                   ),
-                  BankSelectionScreen(
-                    onboardData: onboardData,
+                  ParentAddPayment(
                     onTap: () {
                       if (_tabController.index < 2) {
                         setState(() {
@@ -68,10 +64,7 @@ class _TutorOnboardScreenState extends State<TutorOnboardScreen>
                       }
                     },
                   ),
-                  TutorDocVerificationScreen(
-                    onboardData: onboardData,
-
-                  ),
+                  // TutorDocVerificationScreen(),
                 ],
               ),
             )

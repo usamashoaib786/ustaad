@@ -32,7 +32,9 @@ class CustomAppTextField extends StatefulWidget {
     this.prefixIcon,
     this.onChanged,
     this.suffix,
-    this.width, this.height, this.maxLines,
+    this.width,
+    this.height,
+    this.maxLines,
   });
 
   @override
@@ -51,7 +53,7 @@ class _CustomAppTextFieldState extends State<CustomAppTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height:widget.height?? 40,
+      height: widget.height ?? 40,
       width: widget.width ?? MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         border: widget.border == false
@@ -61,7 +63,7 @@ class _CustomAppTextFieldState extends State<CustomAppTextField> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: TextFormField(
-        maxLines: widget.maxLines?? 1,
+        maxLines: widget.maxLines ?? 1,
         controller: widget.controller,
         obscureText: _obscureText,
         keyboardType: widget.txtType ?? TextInputType.name,
@@ -70,7 +72,9 @@ class _CustomAppTextFieldState extends State<CustomAppTextField> {
         decoration: InputDecoration(
           isDense: true,
           border: InputBorder.none,
-          contentPadding :widget.height != null? const EdgeInsets.all(15) :const EdgeInsets.all(5),
+          contentPadding: widget.height != null
+              ? const EdgeInsets.all(15)
+              : const EdgeInsets.all(8),
           hintText: widget.texthint,
           hintStyle: widget.hintStyle ??
               TextStyle(

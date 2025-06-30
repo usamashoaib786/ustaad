@@ -1,14 +1,20 @@
 class AppUrls {
-  static const String baseUrl = "https://api.bridgepk.com/api/";
-  static const String logIn = "branch/login";
-  static const String logOut= "logout";
-  static const String availRooms= "booking-schedule/availability-rooms";
-  static const String homeCon= "user/dashboard";
-  static const String getLocation= "booking-schedule/filter";
-  static const String getBookings= "booking-schedule/filter";
-  static const String createBooking= "booking-schedule/create";
-  static const String bookingStatus= "booking-schedule/requests";
-  static const String getProfile= "user/profile";
-  static const String updateProfile= "user/profile/update";
+  static const String baseUrl = "http://15.235.204.49:5000/";
+  static const String otp = "auth/send-otp";
+  static const String forgotPass = "auth/forgot-password";
+  static const String confirmPass = "auth/user-reset_password";
+  static const String verifyOtp= "auth/verify-otp";
+  static const String signUp = "auth/user-signup";
+  static const String logIn = "auth/user-signin";
+  static const String onBoard = "tutor/onboarding";
+  static const String getProfile = "tutor/profile";
+  ///////// Tutor Experience //////////////
+  static const String getTutorExp = "tutor/experience";
+  static const String addTutorExp = "tutor/experience/add";
+
+  ////////////  Add Eduction Tutor ////////
+  // static const String addTutorExp = "tutor/experience";
+  // static const String addTutorExp = "tutor/experience";
+  
 }
   

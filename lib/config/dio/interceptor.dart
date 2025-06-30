@@ -65,10 +65,8 @@ class AppDioInterceptor extends Interceptor {
       options.headers.addAll({RequestHeader.authorization: "Bearer $token",
       });
     }
-    String branch = "bridge"; // Set your default branch
 
     // Add the 'branch' header
-    options.headers.addAll({"branch": branch});
     Map<String, dynamic> er = {
       "base_url": options.baseUrl,
       "end_point": options.path,

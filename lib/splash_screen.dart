@@ -45,14 +45,15 @@ class _SplashScreenState extends State<SplashScreen>
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       String? token = prefs.getString(PrefKey.authorization);
+      pushReplacement(context, const LogInScreen());
 
-      if (token != null && token.isNotEmpty) {
-        // ignore: use_build_context_synchronously
-        // pushReplacement(context, const BottomNavView());
-      } else {
-        // ignore: use_build_context_synchronously
-        pushReplacement(context, const LogInScreen());
-      }
+      // if (token != null && token.isNotEmpty) {
+      //   // ignore: use_build_context_synchronously
+      //   // pushReplacement(context, const BottomNavView());
+      // } else {
+      //   // ignore: use_build_context_synchronously
+      //   pushReplacement(context, const LogInScreen());
+      // }
     });
   }
 

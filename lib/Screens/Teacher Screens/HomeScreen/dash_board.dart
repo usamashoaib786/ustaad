@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:ustaad/Helpers/app_text.dart';
 import 'package:ustaad/Helpers/app_theme.dart';
+import 'package:ustaad/Screens/Drawer/tutor_drawer.dart';
 import 'package:ustaad/custom%20widgets/app_bar.dart';
 import 'package:ustaad/custom%20widgets/seesion_cards.dart';
 
@@ -14,6 +15,8 @@ class TutorDashBoardScreen extends StatefulWidget {
 
 class _TutorDashBoardScreenState extends State<TutorDashBoardScreen> {
   String selectedMonth = 'March';
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   final List<String> months = [
     'January',
     'February',
@@ -31,8 +34,17 @@ class _TutorDashBoardScreenState extends State<TutorDashBoardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F9FC),
-      appBar: CustomAppBar(),
+      key: _scaffoldKey,
+      endDrawer: SideMenuDrawer(
+        crossOnTap: () {
+          _scaffoldKey.currentState?.closeEndDrawer();
+        },
+      ),
+      appBar: CustomAppBar(
+        onMenuTap: () {
+          _scaffoldKey.currentState?.openEndDrawer();
+        },
+      ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(

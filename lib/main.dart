@@ -1,9 +1,8 @@
-import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'package:ustaad/Helpers/app_theme.dart';
-import 'package:ustaad/Models/tutor_veirfy_provider.dart';
+import 'package:ustaad/Providers/tutor_exp_provider.dart';
+import 'package:ustaad/Providers/tutor_veirfy_provider.dart';
 import 'package:ustaad/splash_screen.dart';
 
 Future<void> main() async {
@@ -22,11 +21,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => FileProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => ExperienceProvider(context),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          scaffoldBackgroundColor: AppTheme.white,
+        
+          scaffoldBackgroundColor: Colors.white,
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.transparent,
             elevation: 0,

@@ -31,7 +31,7 @@ class AppButton {
         alignment: Alignment.center,
         padding: padding,
         width: width ?? ScreenSize(context).width,
-        height: height ?? 40,
+        height: height ?? 44,
         decoration: BoxDecoration(
             color: backgroundColor ?? AppTheme.appColor,
             borderRadius: BorderRadius.circular(radius ?? 8),
@@ -50,7 +50,7 @@ class AppButton {
                 ),
                 
             AppText.appText(text,
-                fontSize: fontSize ?? 14,
+                fontSize: fontSize ?? 16,
                 textAlign: textAlign,
                 fontWeight: fontWeight ?? FontWeight.w500,
                 textColor: textColor ?? AppTheme.white,

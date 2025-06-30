@@ -4,10 +4,13 @@ import 'package:ustaad/Helpers/app_field.dart';
 import 'package:ustaad/Helpers/app_text.dart';
 import 'package:ustaad/Helpers/app_theme.dart';
 import 'package:ustaad/Helpers/screen_size.dart';
+import 'package:ustaad/Screens/Teacher%20Screens/0nBoard%20Screens/data_model.dart';
 
 class SubjectSelectionScreen extends StatefulWidget {
   final Function()? onTap;
-  const SubjectSelectionScreen({super.key, this.onTap});
+  final TutorOnboardData onboardData;
+  const SubjectSelectionScreen(
+      {super.key, this.onTap, required this.onboardData});
 
   @override
   State<SubjectSelectionScreen> createState() => _SubjectSelectionScreenState();
@@ -166,18 +169,24 @@ class _SubjectSelectionScreenState extends State<SubjectSelectionScreen> {
               },
             ),
           ),
-
-          AppButton.appButton("Proceed",
-              context: context,
-              onTap: selectedSubjects.isEmpty ? null : widget.onTap,
-              textColor: selectedSubjects.isEmpty
-                  ? AppTheme.lighttxtColor
-                  : AppTheme.white,
-                  border: false,
-              height: 52,
-              backgroundColor: selectedSubjects.isEmpty
-                  ? const Color.fromARGB(255, 219, 215, 215)
-                  : AppTheme.primaryCOlor)
+          AppButton.appButton(
+            "Proceed",
+            context: context,
+            onTap: selectedSubjects.isEmpty
+                ? null
+                : () {
+                    widget.onboardData.selectedSubjects = selectedSubjects;
+                    widget.onTap!(); // navigate to next screen
+                  },
+            textColor: selectedSubjects.isEmpty
+                ? AppTheme.lighttxtColor
+                : AppTheme.white,
+            border: false,
+            height: 52,
+            backgroundColor: selectedSubjects.isEmpty
+                ? const Color.fromARGB(255, 219, 215, 215)
+                : AppTheme.primaryCOlor,
+          )
         ],
       ),
     );

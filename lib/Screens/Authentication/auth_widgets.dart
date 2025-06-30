@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:phone_form_field/phone_form_field.dart';
 import 'package:ustaad/Helpers/app_field.dart';
 import 'package:ustaad/Helpers/app_text.dart';
 import 'package:ustaad/Helpers/app_theme.dart';
@@ -8,12 +7,20 @@ import 'package:ustaad/Helpers/utils.dart';
 import 'package:ustaad/Screens/Authentication/login_screen.dart';
 import 'package:ustaad/Screens/Authentication/SignUP/sign_up_screen.dart';
 
-Widget customLableField({lable, controller, isPassword = false, hintText, fontSize,height,maxLines}) {
+Widget customLableField(
+    {lable,
+    controller,
+    isPassword = false,
+    hintText,
+    fontSize,
+    height,
+    maxLines,
+    width}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       AppText.appText("$lable",
-          fontSize: fontSize??14,
+          fontSize: fontSize ?? 14,
           fontWeight: FontWeight.w500,
           textColor: AppTheme.lableText),
       SizedBox(
@@ -22,51 +29,11 @@ Widget customLableField({lable, controller, isPassword = false, hintText, fontSi
       CustomAppTextField(
         maxLines: maxLines,
         height: height,
+        width: width,
         texthint: hintText ?? "$lable",
         controller: controller,
         isPasswordField: isPassword,
       )
-    ],
-  );
-}
-
-Widget phoneField({
-  context,
-  lable,
-  controller,
-}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      AppText.appText("$lable",
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          textColor: AppTheme.lableText),
-      SizedBox(
-        height: 10,
-      ),
-      Container(
-          height: 40,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            border: Border.all(color: const Color(0xffD4D8E2)),
-            color: const Color(0xffFFFFFF),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: PhoneFormField(
-            autovalidateMode: AutovalidateMode.disabled,
-            initialValue: PhoneNumber(
-              isoCode: "PK",
-              nsn: '',
-            ),
-            onChanged: (phoneNumber) {},
-            enabled: true,
-            decoration: InputDecoration(
-              isDense: true,
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            ),
-          )),
     ],
   );
 }
@@ -131,10 +98,14 @@ Widget loginDivider() {
   );
 }
 
-Widget authHeader({context, bool? isSignInScreen}) {
+Widget authHeader({context, bool? isSignInScreen, bool? isPass}) {
   return Container(
     width: ScreenSize(context).width,
-    height: isSignInScreen == true ? 275 : 241,
+    height: isPass == true
+        ? 221
+        : isSignInScreen == true
+            ? 275
+            : 241,
     decoration: BoxDecoration(
         image: DecorationImage(
             image: AssetImage(
@@ -154,7 +125,7 @@ Widget authHeader({context, bool? isSignInScreen}) {
               TextSpan(
                 text: 'Sign in to your ',
                 style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 26,
                     color: Colors.white,
                     fontWeight: FontWeight.w500),
                 children: [
@@ -172,30 +143,114 @@ Widget authHeader({context, bool? isSignInScreen}) {
                 fontSize: 32,
                 fontWeight: FontWeight.w600,
                 textColor: AppTheme.white),
+          if (isPass == true)
+            AppText.appText("Forgot Password",
+                fontSize: 32,
+                fontWeight: FontWeight.w600,
+                textColor: AppTheme.white),
           const SizedBox(height: 15),
-          Row(
-            children: [
-              AppText.appText(
-                  isSignInScreen == true
-                      ? "Don't have an account? "
-                      : "Have an account? ",
-                  textColor: Colors.white70),
-              GestureDetector(
-                onTap: () {
-                  if (isSignInScreen == true) {
-                    push(context, SignupScreen());
-                  } else {
-                    push(context, LogInScreen());
-                  }
-                },
-                child: AppText.appText(
-                    isSignInScreen == true ? "Sign Up" : "SignIN",
-                    textColor: AppTheme.appColor),
-              )
-            ],
-          )
+          if (isPass != true)
+            Row(
+              children: [
+                AppText.appText(
+                    isSignInScreen == true
+                        ? "Don't have an account? "
+                        : "Have an account? ",
+                    textColor: Colors.white70),
+                GestureDetector(
+                  onTap: () {
+                    if (isSignInScreen == true) {
+                      push(context, SignupScreen());
+                    } else {
+                      push(context, LogInScreen());
+                    }
+                  },
+                  child: AppText.appText(
+                      isSignInScreen == true ? "Sign Up" : "SignIN",
+                      textColor: AppTheme.appColor),
+                )
+              ],
+            )
         ],
       ),
     ),
   );
+}
+
+class CardNumberField extends StatefulWidget {
+  final TextEditingController controller;
+  const CardNumberField({super.key, required this.controller});
+
+  @override
+  State<CardNumberField> createState() => _CardNumberFieldState();
+}
+
+class _CardNumberFieldState extends State<CardNumberField> {
+  String get rawCardNumber => widget.controller.text.replaceAll(' ', '');
+
+  @override
+  void initState() {
+    super.initState();
+
+    widget.controller.addListener(() {
+      final text = widget.controller.text;
+      final formatted = _formatCardNumber(text);
+
+      if (text != formatted) {
+        final cursorPosition = widget.controller.selection.baseOffset;
+        widget.controller.value = TextEditingValue(
+          text: formatted,
+          selection: TextSelection.collapsed(
+              offset: _adjustCursorPosition(cursorPosition, text, formatted)),
+        );
+      }
+    });
+  }
+
+  String _formatCardNumber(String input) {
+    final digits = input.replaceAll(RegExp(r'\D'), '');
+    final buffer = StringBuffer();
+    for (int i = 0; i < digits.length; i++) {
+      buffer.write(digits[i]);
+      if ((i + 1) % 4 == 0 && i + 1 != digits.length) {
+        buffer.write(' ');
+      }
+    }
+    return buffer.toString();
+  }
+
+  int _adjustCursorPosition(int oldPosition, String oldText, String newText) {
+    int diff = newText.length - oldText.length;
+    return (oldPosition + diff).clamp(0, newText.length);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 40,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color(0xffD4D8E2)),
+        color: const Color(0xffFFFFFF),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: TextFormField(
+        maxLines: 1,
+        controller: widget.controller,
+        keyboardType: TextInputType.name,
+        cursorColor: AppTheme.appColor,
+        decoration: InputDecoration(
+          isDense: true,
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.all(8),
+          hintText: "1234 1234 1234 1234",
+          hintStyle: TextStyle(
+            color: AppTheme.hintColor,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ),
+    );
+  }
 }

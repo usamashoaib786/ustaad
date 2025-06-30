@@ -3,16 +3,21 @@ import 'package:ustaad/Helpers/app_button.dart';
 import 'package:ustaad/Helpers/app_text.dart';
 import 'package:ustaad/Helpers/app_theme.dart';
 import 'package:ustaad/Screens/Authentication/auth_widgets.dart';
+import 'package:ustaad/Screens/Teacher%20Screens/0nBoard%20Screens/data_model.dart';
 
 class BankSelectionScreen extends StatefulWidget {
-  final Function()? onTap;
-  const BankSelectionScreen({super.key, this.onTap});
+  final VoidCallback onTap;
+  final TutorOnboardData onboardData;
+  const BankSelectionScreen(
+      {super.key, required this.onTap, required this.onboardData});
 
   @override
   State<BankSelectionScreen> createState() => _BankSelectionScreenState();
 }
 
 class _BankSelectionScreenState extends State<BankSelectionScreen> {
+  final TextEditingController accountController = TextEditingController();
+
   String? selectedBank = "HBL Bank";
   final List<String> banks = [
     "HBL Bank",
@@ -21,7 +26,6 @@ class _BankSelectionScreenState extends State<BankSelectionScreen> {
     "Alfalah",
     "Meezan"
   ];
-  final TextEditingController accountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -114,18 +118,25 @@ class _BankSelectionScreenState extends State<BankSelectionScreen> {
                   ),
                 ),
                 SizedBox(height: 20),
-                SizedBox(height: 8),
-                customLableField(
-                    lable: "Account Number",
-                    fontSize: 16.0,
-                    controller: accountController,
-                    hintText: "1234 1234 1234 1234"),
+                AppText.appText("Card Number",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    textColor: AppTheme.lableText),
+                SizedBox(
+                  height: 10,
+                ),
+                CardNumberField(
+                  controller: accountController,
+                ),
                 SizedBox(
                   height: 40,
                 ),
-                AppButton.appButton("Proceed",
-                    context: context,
-                    onTap: widget.onTap,
+                AppButton.appButton("Proceed", context: context, onTap: () {
+                  widget.onboardData.selectedBank = selectedBank;
+                  widget.onboardData.accountNumber =
+                      accountController.text.trim();
+                  widget.onTap();
+                },
                     textColor: AppTheme.white,
                     border: false,
                     height: 52,
