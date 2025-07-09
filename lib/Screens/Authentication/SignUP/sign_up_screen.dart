@@ -18,6 +18,7 @@ import 'package:ustaad/Helpers/utils.dart';
 import 'package:ustaad/Screens/Authentication/SignUP/country_picker.dart';
 import 'package:ustaad/Screens/Authentication/SignUP/widgets.dart';
 import 'package:ustaad/Screens/Authentication/auth_widgets.dart';
+import 'package:ustaad/Screens/Parents%20Screens/Parents%20OnBoard/parents_onboard.dart';
 import 'package:ustaad/Screens/Teacher%20Screens/0nBoard%20Screens/tutor_on_board.dart';
 import 'package:ustaad/config/dio/app_logger.dart';
 import 'package:ustaad/config/dio/dio.dart';
@@ -59,6 +60,7 @@ class _SignupScreenState extends State<SignupScreen>
   AppLogger logger = AppLogger();
   String _selectedCountry = "Pakistan";
   var finalData;
+  String? userRole;
   @override
   void initState() {
     super.initState();
@@ -124,8 +126,8 @@ class _SignupScreenState extends State<SignupScreen>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              physics:
-                  NeverScrollableScrollPhysics(), // so user can only go forward by button
+              // physics:
+              //     NeverScrollableScrollPhysics(), // so user can only go forward by button
               children: [
                 _userDetailsForm(),
                 _additionDetails(),
@@ -585,23 +587,23 @@ class _SignupScreenState extends State<SignupScreen>
       if (response.statusCode == 200) {
         ToastHelper.displaySuccessMotionToast(
             context: context, msg: "${responseData["message"]}");
-
-        setState(() async {
+        finalData = responseData["data"];
+        var token = finalData["token"];
+        var userId = finalData["id"];
+        var role = finalData["role"];
+        var userName = finalData["fullName"];
+        var profilePic = finalData["profilePic"];
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString(PrefKey.authorization, token ?? '');
+        prefs.setString(PrefKey.id, userId);
+        prefs.setString(PrefKey.userRole, role);
+        prefs.setString(PrefKey.userName, userName);
+        prefs.setString(PrefKey.userPic, profilePic ?? '');
+        userRole = role;
+        setState(() {
           isLoading = false;
-          finalData = responseData["data"];
-          var token = finalData["token"];
-          var userId = finalData["id"];
-          var userRole = finalData["role"];
-          var userName = finalData["fullName"];
-          var profilePic = finalData["profilePic"];
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString(PrefKey.authorization, token ?? '');
-          prefs.setString(PrefKey.id, userId);
-          prefs.setString(PrefKey.userRole, userRole);
-          prefs.setString(PrefKey.userName, userName);
-          prefs.setString(PrefKey.userPic, profilePic ?? '');
-          getOtp(context);
         });
+        getOtp(context);
 
         if (_tabController.index < 2) {
           setState(() {
@@ -689,8 +691,12 @@ class _SignupScreenState extends State<SignupScreen>
         setState(() {
           isLoading = false;
         });
-
-        pushUntil(context, TutorOnboardScreen());
+        print("knfnoffo4n$userRole");
+        if (userRole == "TUTOR") {
+          pushUntil(context, TutorOnboardScreen());
+        } else if (userRole == "PARENT") {
+          pushUntil(context, ParentsOnboardScreen());
+        }
       } else {
         setState(() {
           isLoading = false;

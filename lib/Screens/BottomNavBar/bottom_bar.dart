@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:ustaad/Helpers/app_theme.dart';
 import 'package:ustaad/Helpers/screen_size.dart';
+import 'package:ustaad/Screens/Parents%20Screens/Parent%20Chat%20Screen/parent_chat.dart';
+import 'package:ustaad/Screens/Parents%20Screens/Parent%20Dashboard/dashboard.dart';
+import 'package:ustaad/Screens/Parents%20Screens/Parent%20Profile/parent_profile.dart';
+import 'package:ustaad/Screens/Parents%20Screens/Parent%20Sessions/parent_session.dart';
 import 'package:ustaad/Screens/Teacher%20Screens/Chats/tutor_chat.dart';
 import 'package:ustaad/Screens/Teacher%20Screens/HomeScreen/dash_board.dart';
 import 'package:ustaad/Screens/Teacher%20Screens/Profile/tutor_profile.dart';
 import 'package:ustaad/Screens/Teacher%20Screens/Sessions/tutor_session.dart';
 
 class BottomNavView extends StatefulWidget {
-  const BottomNavView({super.key});
+  final bool tutor;
+  const BottomNavView({super.key, required this.tutor});
 
   @override
   State<BottomNavView> createState() => _BottomNavViewState();
@@ -16,12 +21,19 @@ class BottomNavView extends StatefulWidget {
 class _BottomNavViewState extends State<BottomNavView> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [
-    const TutorDashBoardScreen(),
-    const TutorChatScreen(),
-    const TutorSessionScreen(),
-    const TutorProfileScreen(),
-  ];
+  List<Widget> get _screens => widget.tutor
+      ? const [
+          TutorDashBoardScreen(),
+          TutorChatScreen(),
+          TutorSessionScreen(),
+          TutorProfileScreen(),
+        ]
+      : const [
+          ParentsDashBoardScreen(),
+          ParentChatScreen(),
+          ParentSessionScreen(),
+          ParentProfileScreen(),
+        ];
 
   final List<String> _titles = ["Home", "Chat", "Sessions", "Profile"];
   final List<String> _icons = [

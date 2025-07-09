@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ustaad/Screens/Authentication/SignUP/widgets.dart';
 import 'package:ustaad/Screens/Parents%20Screens/Parents%20OnBoard/add_payment.dart';
 import 'package:ustaad/Screens/Parents%20Screens/Parents%20OnBoard/child_profile.dart';
-import 'package:ustaad/Screens/Teacher%20Screens/0nBoard%20Screens/doc_verification.dart';
+import 'package:ustaad/Screens/Parents%20Screens/Parents%20OnBoard/parents_verify.dart';
 
 class ParentsOnboardScreen extends StatefulWidget {
   const ParentsOnboardScreen({super.key});
@@ -44,7 +44,7 @@ class _ParentsOnboardScreenState extends State<ParentsOnboardScreen>
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-               // so user can only go forward by button
+                physics: NeverScrollableScrollPhysics(),
                 children: [
                   ParentChildProfile(
                     onTap: () {
@@ -64,7 +64,7 @@ class _ParentsOnboardScreenState extends State<ParentsOnboardScreen>
                       }
                     },
                   ),
-                  // TutorDocVerificationScreen(),
+                  ParentsVerificationSCreen(),
                 ],
               ),
             )

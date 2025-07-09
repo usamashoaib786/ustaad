@@ -13,8 +13,13 @@ class AppUrls {
   static const String addTutorExp = "tutor/experience/add";
 
   ////////////  Add Eduction Tutor ////////
-  // static const String addTutorExp = "tutor/experience";
-  // static const String addTutorExp = "tutor/experience";
+  static const String getTutorEdu = "tutor/education";
+  static const String addTutorEdu = "tutor/education";
   
+  ////////////  Add parent child Profile ////////
+  static const String addChild = "parent/child/add";
+  static const String parentOnBoard = "parent/onboarding";
+  static const String getChildren = "parent/children";
+
 }
   

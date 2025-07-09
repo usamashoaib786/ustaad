@@ -47,8 +47,6 @@ class _ConfirmPassScreenState extends State<ConfirmPassScreen> {
     super.initState();
     dio = AppDio(context);
     logger.init();
-    email = widget.email;
-    userId = widget.userId;
     startEmailTimer();
   }
 
@@ -167,7 +165,9 @@ class _ConfirmPassScreenState extends State<ConfirmPassScreen> {
                       ToastHelper.displayErrorMotionToast(
                           context: context,
                           msg: "Please enter valid Email OTP");
-                    } else {}
+                    } else {
+                      changePass(context);
+                    }
                   },
                   width: ScreenSize(context).width * 0.4,
                   borderColor: Colors.transparent,
@@ -304,13 +304,14 @@ class _ConfirmPassScreenState extends State<ConfirmPassScreen> {
     Map<String, dynamic> params = {
       "userId": "${widget.userId}",
       "newPassword": _passController.text,
+      "email": widget.email,
       "otp": emailOtpController.text,
       "type": "email",
       "purpose": "password_reset"
     };
     try {
       Response response =
-          await dio.post(path: AppUrls.forgotPass, data: params);
+          await dio.post(path: AppUrls.confirmPass, data: params);
       var responseData = response.data;
 
       if (response.statusCode == 200) {

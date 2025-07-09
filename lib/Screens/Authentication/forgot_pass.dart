@@ -86,7 +86,6 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                         : AppButton.appButton("Continue", context: context,
                             onTap: () {
                             String email = _emailController.text.trim();
-                            print("object$email");
                             final emailPattern =
                                 RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
                             if (email.isEmpty ||
@@ -122,12 +121,15 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
       if (response.statusCode == 200) {
         ToastHelper.displaySuccessMotionToast(
             context: context, msg: "${responseData["message"]}");
-
         setState(() {
           isLoading = false;
         });
-    // pushReplacement(context, screen)
-
+        pushReplacement(
+            context,
+            ConfirmPassScreen(
+              email: responseData["data"]["email"],
+              userId: responseData["data"]["userId"],
+            ));
       } else {
         setState(() {
           isLoading = false;

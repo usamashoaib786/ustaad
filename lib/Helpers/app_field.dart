@@ -104,3 +104,39 @@ class _CustomAppTextFieldState extends State<CustomAppTextField> {
     );
   }
 }
+
+Widget parentHomeSearchField(context, controller) {
+  return Container(
+    height: 44,
+    width: MediaQuery.of(context).size.width,
+    decoration: BoxDecoration(
+      border: Border.all(color: const Color(0xffD4D8E2)),
+      color: const Color(0xffFFFFFF),
+      borderRadius: BorderRadius.circular(8),
+    ),
+    child: TextFormField(
+      maxLines: 1,
+      controller: controller,
+      keyboardType: TextInputType.name,
+      cursorColor: AppTheme.appColor,
+      // onChanged: widget.onChanged,
+      decoration: InputDecoration(
+        isDense: true,
+        border: InputBorder.none,
+        contentPadding: const EdgeInsets.all(8),
+        hintText: "Explore Tutors",
+        hintStyle: TextStyle(
+          color: AppTheme.hintColor,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+        ),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Image.asset(
+            "assets/images/search.png",
+          ),
+        ),
+      ),
+    ),
+  );
+}

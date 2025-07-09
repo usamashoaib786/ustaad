@@ -9,8 +9,9 @@ import 'package:ustaad/Screens/Drawer%20Screens/setting_screen.dart';
 
 class SideMenuDrawer extends StatefulWidget {
   final VoidCallback? crossOnTap;
+  final bool isTutor;
 
-  const SideMenuDrawer({super.key, this.crossOnTap});
+  const SideMenuDrawer({super.key, this.crossOnTap, required this.isTutor});
 
   @override
   State<SideMenuDrawer> createState() => _SideMenuDrawerState();
@@ -44,34 +45,60 @@ class _SideMenuDrawerState extends State<SideMenuDrawer> {
                   ),
                 ),
               ),
-              Expanded(
-                child: ListView(
-                  children: [
-                    menuItem(
-                        onTap: () {},
-                        "Check Parent Request",
-                        "assets/images/checkParentRequest.png"),
-                    menuItem(onTap: () {
-                      push(context, TutorEarningScreen());
-                    }, 'Earnings Dashboard',
-                        "assets/images/earningDashBoard.png"),
-                    menuItem(
-                        onTap: () {},
-                        'Documents/Verifications',
-                        "assets/images/documentVerify.png"),
-                    menuItem(onTap: () {
-                      push(context, CostSetting());
-                    }, 'Cost Settings', "assets/images/costSetting.png"),
-                    menuItem(onTap: () {
-                      push(context, SettingScreen());
-                    }, 'Settings', "assets/images/setting.png"),
-                    menuItem(onTap: () {}, 'Help', "assets/images/help.png"),
-                    menuItem(onTap: () {
-                      push(context, LoactionScreen());
-                    }, 'Location Selection', "assets/images/location.png"),
-                  ],
-                ),
-              ),
+              widget.isTutor == true
+                  ? Expanded(
+                      child: ListView(
+                        children: [
+                          menuItem(
+                              onTap: () {},
+                              "Check Parent Request",
+                              "assets/images/checkParentRequest.png"),
+                          menuItem(onTap: () {
+                            push(context, TutorEarningScreen());
+                          }, 'Earnings Dashboard',
+                              "assets/images/earningDashBoard.png"),
+                          menuItem(
+                              onTap: () {},
+                              'Documents/Verifications',
+                              "assets/images/documentVerify.png"),
+                          menuItem(onTap: () {
+                            push(context, CostSetting());
+                          }, 'Cost Settings', "assets/images/costSetting.png"),
+                          menuItem(onTap: () {
+                            push(context, SettingScreen());
+                          }, 'Settings', "assets/images/setting.png"),
+                          menuItem(
+                              onTap: () {}, 'Help', "assets/images/help.png"),
+                          menuItem(onTap: () {
+                            push(context, LoactionScreen());
+                          }, 'Location Selection',
+                              "assets/images/location.png"),
+                        ],
+                      ),
+                    )
+                  : Expanded(
+                      child: ListView(
+                        children: [
+                          menuItem(
+                              onTap: () {},
+                              "Check Your all Request",
+                              "assets/images/checkParentRequest.png"),
+                          menuItem(
+                              onTap: () {},
+                              'Payments',
+                              "assets/images/earningDashBoard.png"),
+                          menuItem(
+                              onTap: () {},
+                              'Documents/Verifications',
+                              "assets/images/documentVerify.png"),
+                          menuItem(onTap: () {
+                            push(context, SettingScreen());
+                          }, 'Settings', "assets/images/setting.png"),
+                          menuItem(
+                              onTap: () {}, 'Help', "assets/images/help.png"),
+                        ],
+                      ),
+                    ),
             ],
           ),
         ),

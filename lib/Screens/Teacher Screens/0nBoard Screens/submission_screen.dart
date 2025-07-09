@@ -6,7 +6,8 @@ import 'package:ustaad/Helpers/utils.dart';
 import 'package:ustaad/Screens/BottomNavBar/bottom_bar.dart';
 
 class SubmissionCompleteScreen extends StatelessWidget {
-  const SubmissionCompleteScreen({super.key});
+  final bool tutor;
+  const SubmissionCompleteScreen({super.key, required this.tutor});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,11 @@ class SubmissionCompleteScreen extends StatelessWidget {
                 border: true,
                 borderColor: Colors.grey.shade300,
                 onTap: () {
-                  push(context, BottomNavView());
+                  push(
+                      context,
+                      BottomNavView(
+                        tutor: tutor,
+                      ));
                 },
               ),
             ],

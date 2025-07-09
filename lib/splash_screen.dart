@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ustaad/Helpers/pref_keys.dart';
 import 'package:ustaad/Helpers/utils.dart';
 import 'package:ustaad/Screens/Authentication/login_screen.dart';
 
@@ -31,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen>
     );
 
     _controller.forward();
-    _navigateToHome();
+    _navigateToHome(context);
   }
 
   @override
@@ -40,11 +38,11 @@ class _SplashScreenState extends State<SplashScreen>
     super.dispose();
   }
 
-  void _navigateToHome() {
+  void _navigateToHome(context) {
     Future.delayed(const Duration(seconds: 3), () async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+      // SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      String? token = prefs.getString(PrefKey.authorization);
+      // String? token = prefs.getString(PrefKey.authorization);
       pushReplacement(context, const LogInScreen());
 
       // if (token != null && token.isNotEmpty) {

@@ -39,6 +39,7 @@ class _TutorDashBoardScreenState extends State<TutorDashBoardScreen> {
         crossOnTap: () {
           _scaffoldKey.currentState?.closeEndDrawer();
         },
+        isTutor: true,
       ),
       appBar: CustomAppBar(
         onMenuTap: () {

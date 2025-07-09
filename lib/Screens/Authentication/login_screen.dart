@@ -137,10 +137,9 @@ class _LogInScreenState extends State<LogInScreen> {
     });
 
     Map<String, dynamic> params = {
-      "email": _emailController.text,
+      "email": _emailController.text.trim().replaceAll(' ', ''),
       "password": _passwordController.text,
     };
-
     try {
       Response response = await dio.post(path: AppUrls.logIn, data: params);
       var responseData = response.data;
@@ -174,10 +173,24 @@ class _LogInScreenState extends State<LogInScreen> {
                 email: _emailController.text,
                 phone: "${finalData["phone"]}",
               ));
-        } else if (finalData["isOnBoard"] == "required") {
+        } else if (finalData["isOnBoard"] == "required" &&
+            finalData["role"] == "TUTOR") {
           push(context, TutorOnboardScreen());
+        } else if (finalData["isOnBoard"] == "required" &&
+            finalData["role"] == "PARENT") {
+          push(context, ParentsOnboardScreen());
         } else if (finalData["role"] == "TUTOR") {
-          push(context, BottomNavView());
+          push(
+              context,
+              BottomNavView(
+                tutor: true,
+              ));
+        } else if (finalData["role"] == "PARENT") {
+          push(
+              context,
+              BottomNavView(
+                tutor: false,
+              ));
         }
         // Navigator.pushAndRemoveUntil(
         //   context,

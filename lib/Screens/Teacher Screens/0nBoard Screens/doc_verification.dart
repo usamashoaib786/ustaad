@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -196,9 +194,7 @@ class _TutorDocVerificationScreenState
     setState(() {
       isLoading = true;
     });
-    print(
-        " subject: ${jsonEncode(data.selectedSubjects)}    bankName: ${data.selectedBank}   account Number: ${data.accountNumber?.replaceAll(RegExp(r'\D'), '')}");
-    try {
+  try {
       // Prepare FormData for file upload
       FormData formData = FormData.fromMap({
         "subjects": data.selectedSubjects, // e.g. ["Math", "Science"]
@@ -230,7 +226,7 @@ class _TutorDocVerificationScreenState
           isLoading = false;
         });
 
-        pushUntil(context, SubmissionCompleteScreen());
+        pushUntil(context, SubmissionCompleteScreen(tutor: true,));
       } else {
         setState(() {
           isLoading = false;

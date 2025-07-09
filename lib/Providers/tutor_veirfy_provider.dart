@@ -22,4 +22,9 @@ class FileProvider with ChangeNotifier {
     selectedFiles.removeAt(index);
     notifyListeners();
   }
+  
+  void clearAll() {
+    selectedFiles.clear();
+    notifyListeners();
+  }
 }

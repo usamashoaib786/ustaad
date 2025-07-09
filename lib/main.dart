@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+import 'package:ustaad/Providers/tutor_education_provider.dart';
 import 'package:ustaad/Providers/tutor_exp_provider.dart';
 import 'package:ustaad/Providers/tutor_veirfy_provider.dart';
 import 'package:ustaad/splash_screen.dart';
@@ -24,11 +25,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => ExperienceProvider(context),
         ),
+        ChangeNotifierProvider(
+          create: (_) => EducationProvider(context),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-        
           scaffoldBackgroundColor: Colors.white,
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.transparent,
