@@ -108,8 +108,7 @@ class _TutorProfileScreenState extends State<TutorProfileScreen> {
                                         width: 2, color: AppTheme.appColor),
                                   ),
                                   child: userPic == ""
-                                      ? Image.asset(
-                                          "assets/images/profile.png")
+                                      ? Image.asset("assets/images/profile.png")
                                       : Image.asset(userPic!),
                                 ),
                               ),
@@ -166,8 +165,7 @@ class _TutorProfileScreenState extends State<TutorProfileScreen> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(
-                            children:
-                                List.generate(tabTitles.length, (index) {
+                            children: List.generate(tabTitles.length, (index) {
                               return Expanded(
                                 child: GestureDetector(
                                   onTap: () {
@@ -221,7 +219,7 @@ class _TutorProfileScreenState extends State<TutorProfileScreen> {
 
     try {
       Response response = await dio.get(
-        path: AppUrls.getProfile,
+        path: AppUrls.getTutorProfile,
       );
       var responseData = response.data;
 

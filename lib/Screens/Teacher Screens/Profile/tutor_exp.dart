@@ -19,7 +19,8 @@ class _TutorExperienceState extends State<TutorExperience> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ExperienceProvider>(context, listen: false).fetchExperiences();
+    Provider.of<ExperienceProvider>(context, listen: false)
+        .fetchExperiences(context);
   }
 
   @override
@@ -305,7 +306,8 @@ class _AddExperienceBottomSheetState extends State<AddExperienceBottomSheet> {
                         endDate: _endDateRaw?.toIso8601String() ?? '',
                         description: _description.text.trim(),
                       );
-                      bool success = await provider.addExperience(experience, context);
+                      bool success =
+                          await provider.addExperience(experience, context);
                       if (success) Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(

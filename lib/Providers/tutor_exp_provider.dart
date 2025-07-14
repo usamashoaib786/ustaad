@@ -27,7 +27,7 @@ class ExperienceProvider with ChangeNotifier {
 
   ExperienceProvider(BuildContext context) : dio = AppDio(context);
 
-  Future<void> fetchExperiences() async {
+  Future<void> fetchExperiences(context) async {
     try {
       final response = await dio.get(path: AppUrls.getTutorExp);
       if (response.statusCode == 201) {
@@ -41,6 +41,9 @@ class ExperienceProvider with ChangeNotifier {
           ));
         }
         notifyListeners();
+      }else {
+        ToastHelper.displayErrorMotionToast(
+            context: context, msg: "${response.data["errors"][0]["message"]}");
       }
     } catch (e) {
       if (kDebugMode) {
@@ -67,6 +70,9 @@ class ExperienceProvider with ChangeNotifier {
 
         notifyListeners();
         return true;
+      }else {
+        ToastHelper.displayErrorMotionToast(
+            context: context, msg: "${response.data["errors"][0]["message"]}");
       }
     } catch (e) {
       if (kDebugMode) {

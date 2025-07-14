@@ -27,10 +27,10 @@ class EducationProvider with ChangeNotifier {
 
   EducationProvider(BuildContext context) : dio = AppDio(context);
 
-  Future<void> fetchEducation() async {
+  Future<void> fetchEducation(context) async {
     try {
       final response = await dio.get(path: AppUrls.getTutorEdu);
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         education.clear();
         for (var item in response.data['data']) {
           _education.add(Education(
@@ -41,6 +41,9 @@ class EducationProvider with ChangeNotifier {
           ));
         }
         notifyListeners();
+      } else {
+        ToastHelper.displayErrorMotionToast(
+            context: context, msg: "${response.data["errors"][0]["message"]}");
       }
     } catch (e) {
       if (kDebugMode) {
@@ -51,14 +54,14 @@ class EducationProvider with ChangeNotifier {
 
   Future<bool> addEducation(Education education, context) async {
     Map<String, dynamic> params = {
-      "company": education.institute,
+      "institute": education.institute,
       "startDate": education.startDate,
       "endDate": education.endDate,
       "description": education.description,
     };
     try {
       Response response =
-          await dio.post(path: AppUrls.addTutorExp, data: params);
+          await dio.post(path: AppUrls.addTutorEdu, data: params);
 
       if (response.statusCode == 201) {
         _education.add(education);
@@ -67,6 +70,9 @@ class EducationProvider with ChangeNotifier {
 
         notifyListeners();
         return true;
+      } else {
+        ToastHelper.displayErrorMotionToast(
+            context: context, msg: "${response.data["errors"][0]["message"]}");
       }
     } catch (e) {
       if (kDebugMode) {

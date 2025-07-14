@@ -19,7 +19,8 @@ class _TutorEducationScreenState extends State<TutorEducationScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<EducationProvider>(context, listen: false).fetchEducation();
+    Provider.of<EducationProvider>(context, listen: false)
+        .fetchEducation(context);
   }
 
   @override
