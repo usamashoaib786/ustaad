@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+import 'package:ustaad/Providers/all_chat_provider.dart';
+import 'package:ustaad/Providers/subject_cost_provider.dart';
 import 'package:ustaad/Providers/tutor_about_provider.dart';
 import 'package:ustaad/Providers/tutor_education_provider.dart';
 import 'package:ustaad/Providers/tutor_exp_provider.dart';
@@ -28,14 +30,18 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => AboutProvider(context),
-        ), ChangeNotifierProvider(
+        ),
+        ChangeNotifierProvider(
           create: (_) => EducationProvider(context),
         ),
+        ChangeNotifierProvider(
+          create: (_) => AllChatProvider(context),
+        ),
+        ChangeNotifierProvider(create: (_) => CostSettingProvider(context)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.transparent,
             elevation: 0,

@@ -5,7 +5,7 @@ import 'package:ustaad/Helpers/app_theme.dart';
 import 'package:ustaad/Helpers/screen_size.dart';
 
 class LoactionScreen extends StatefulWidget {
-  const LoactionScreen({Key? key}) : super(key: key);
+  const LoactionScreen({super.key});
 
   @override
   State<LoactionScreen> createState() => _LoactionScreenState();
@@ -65,10 +65,9 @@ class _LoactionScreenState extends State<LoactionScreen> {
         leading: Padding(
           padding: const EdgeInsets.all(12.0),
           child: InkWell(
-            borderRadius: BorderRadius.circular(24),
-            onTap: () => Navigator.pop(context),
-            child: Image.asset("assets/images/arrowBack.png")
-          ),
+              borderRadius: BorderRadius.circular(24),
+              onTap: () => Navigator.pop(context),
+              child: Image.asset("assets/images/arrowBack.png")),
         ),
         title: AppText.appText(
           "Add Location",
@@ -135,7 +134,8 @@ class _LoactionScreenState extends State<LoactionScreen> {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: const Color.fromARGB(66, 107, 105, 105)),
+                          border: Border.all(
+                              color: const Color.fromARGB(66, 107, 105, 105)),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black12,

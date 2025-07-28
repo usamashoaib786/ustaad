@@ -3,7 +3,7 @@ import 'package:ustaad/Helpers/app_field.dart';
 import 'package:ustaad/Helpers/app_text.dart';
 import 'package:ustaad/Helpers/app_theme.dart';
 import 'package:ustaad/Helpers/screen_size.dart';
-import 'package:ustaad/Screens/Teacher%20Screens/Chats/chat_modet.dart';
+import 'package:ustaad/Screens/Chats/chat_modet.dart';
 
 class SingleTutorChatScreen extends StatelessWidget {
   final List<ChatMessage> messages = [

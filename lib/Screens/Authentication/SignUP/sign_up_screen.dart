@@ -534,7 +534,7 @@ class _SignupScreenState extends State<SignupScreen>
       },
       child: Container(
         height: 36,
-        width: MediaQuery.of(context).size.width * 0.42,
+        width: MediaQuery.of(context).size.width * 0.41,
         decoration: BoxDecoration(
           border: Border.all(
             width: 1,
@@ -691,7 +691,6 @@ class _SignupScreenState extends State<SignupScreen>
         setState(() {
           isLoading = false;
         });
-        print("knfnoffo4n$userRole");
         if (userRole == "TUTOR") {
           pushUntil(context, TutorOnboardScreen());
         } else if (userRole == "PARENT") {

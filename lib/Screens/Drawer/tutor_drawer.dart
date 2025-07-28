@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ustaad/Helpers/app_text.dart';
 import 'package:ustaad/Helpers/app_theme.dart';
 import 'package:ustaad/Helpers/utils.dart';
-import 'package:ustaad/Screens/Drawer%20Screens/cost_setting.dart';
+import 'package:ustaad/Screens/Drawer%20Screens/Cost%20Setting/cost_setting.dart';
 import 'package:ustaad/Screens/Drawer%20Screens/earning_dashboard.dart';
 import 'package:ustaad/Screens/Drawer%20Screens/location_screen.dart';
 import 'package:ustaad/Screens/Drawer%20Screens/setting_screen.dart';

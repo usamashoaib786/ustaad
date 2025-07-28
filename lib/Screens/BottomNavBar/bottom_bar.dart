@@ -5,7 +5,7 @@ import 'package:ustaad/Screens/Parents%20Screens/Parent%20Chat%20Screen/parent_c
 import 'package:ustaad/Screens/Parents%20Screens/Parent%20Dashboard/dashboard.dart';
 import 'package:ustaad/Screens/Parents%20Screens/Parent%20Profile/parent_profile.dart';
 import 'package:ustaad/Screens/Parents%20Screens/Parent%20Sessions/parent_session.dart';
-import 'package:ustaad/Screens/Teacher%20Screens/Chats/tutor_chat.dart';
+import 'package:ustaad/Screens/Chats/tutor_chat.dart';
 import 'package:ustaad/Screens/Teacher%20Screens/HomeScreen/dash_board.dart';
 import 'package:ustaad/Screens/Teacher%20Screens/Profile/tutor_profile.dart';
 import 'package:ustaad/Screens/Teacher%20Screens/Sessions/tutor_session.dart';

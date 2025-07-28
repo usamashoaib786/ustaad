@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:ustaad/Screens/Authentication/auth_widgets.dart';
@@ -74,7 +75,9 @@ class _ChildDetailsState extends State<ChildDetails> {
         _populateFields(selectedChild!);
       }
     } catch (e) {
-      print("❌ Error fetching children: $e");
+      if (kDebugMode) {
+        print("❌ Error fetching children: $e");
+      }
     } finally {
       setState(() => isLoading = false);
     }

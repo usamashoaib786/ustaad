@@ -53,7 +53,8 @@ class _ParentsVerificationSCreenState extends State<ParentsVerificationSCreen> {
                   border: false,
                   height: 52,
                   backgroundColor: AppTheme.primaryCOlor,
-                )
+                ),
+          const SizedBox(height: 20),
         ],
       ),
     );
@@ -164,7 +165,7 @@ class _ParentsVerificationSCreenState extends State<ParentsVerificationSCreen> {
     );
   }
 
-  void uploadDocuments(BuildContext context) async {
+  void uploadDocuments(context) async {
     final fileProvider = Provider.of<FileProvider>(context, listen: false);
 
     if (fileProvider.selectedFiles.length < 2) {
@@ -186,14 +187,19 @@ class _ParentsVerificationSCreenState extends State<ParentsVerificationSCreen> {
             await MultipartFile.fromFile(idBack.path!, filename: idBack.name),
       });
 
-      final response = await dio.post(path: AppUrls.parentOnBoard, data: formData);
+      final response =
+          await dio.post(path: AppUrls.parentOnBoard, data: formData);
       final data = response.data;
 
       if (response.statusCode == 201) {
         ToastHelper.displaySuccessMotionToast(
             context: context, msg: "${data["message"]}");
         fileProvider.clearAll();
-        pushUntil(context, const SubmissionCompleteScreen(tutor: false,));
+        pushUntil(
+            context,
+            const SubmissionCompleteScreen(
+              tutor: false,
+            ));
       } else {
         ToastHelper.displayErrorMotionToast(
             context: context, msg: data["errors"][0]["message"]);

@@ -22,4 +22,12 @@ class AppUrls {
   static const String addChild = "parent/child/add";
   static const String parentOnBoard = "parent/onboarding";
   static const String getChildren = "parent/children";
+
+  
+  ////////////  Cost setting screen ////////
+  static const String getcostsetting = "tutor/subject/settings";
+  static const String postcostsetting = "tutor/subject/settings";
+  static const String editcostsetting = "tutor/subject/settings";
+  ////////////  Chat APIs ////////
+  static const String getAllChat = "chat/conversations";
 }

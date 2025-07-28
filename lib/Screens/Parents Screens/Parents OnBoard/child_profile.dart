@@ -110,7 +110,7 @@ class _ParentChildProfileState extends State<ParentChildProfile> {
                     children: [
                       AppButton.appButton("Add Another Child",
                           context: context,
-                          onTap: () => addSingleChild(currentChild),
+                          onTap: () => addSingleChild(currentChild, context),
                           textColor: AppTheme.black,
                           border: true,
                           height: 44,
@@ -245,7 +245,7 @@ class _ParentChildProfileState extends State<ParentChildProfile> {
     setState(() => childList[index].selectedImage = null);
   }
 
-  Future<void> addSingleChild(ChildProfileModel child) async {
+  Future<void> addSingleChild(ChildProfileModel child, context) async {
     if (!validateFields(child)) return;
 
     setState(() => isLoading = true);
@@ -298,7 +298,7 @@ class _ParentChildProfileState extends State<ParentChildProfile> {
     }
 
     if (!isAllEmpty) {
-      await addSingleChild(child);
+      await addSingleChild(child, context);
     }
     if (widget.onTap != null) widget.onTap!();
   }
