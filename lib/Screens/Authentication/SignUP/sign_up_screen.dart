@@ -18,8 +18,7 @@ import 'package:ustaad/Helpers/utils.dart';
 import 'package:ustaad/Screens/Authentication/SignUP/country_picker.dart';
 import 'package:ustaad/Screens/Authentication/SignUP/widgets.dart';
 import 'package:ustaad/Screens/Authentication/auth_widgets.dart';
-import 'package:ustaad/Screens/Parents%20Screens/Parents%20OnBoard/parents_onboard.dart';
-import 'package:ustaad/Screens/Teacher%20Screens/0nBoard%20Screens/tutor_on_board.dart';
+import 'package:ustaad/Screens/Authentication/login_screen.dart';
 import 'package:ustaad/config/dio/app_logger.dart';
 import 'package:ustaad/config/dio/dio.dart';
 import 'package:ustaad/config/keys/urls.dart';
@@ -108,6 +107,7 @@ class _SignupScreenState extends State<SignupScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppTheme.white,
       body: Column(
         children: [
           authHeader(context: context, isSignInScreen: false),
@@ -603,7 +603,6 @@ class _SignupScreenState extends State<SignupScreen>
         setState(() {
           isLoading = false;
         });
-        getOtp(context);
 
         if (_tabController.index < 2) {
           setState(() {
@@ -691,11 +690,12 @@ class _SignupScreenState extends State<SignupScreen>
         setState(() {
           isLoading = false;
         });
-        if (userRole == "TUTOR") {
-          pushUntil(context, TutorOnboardScreen());
-        } else if (userRole == "PARENT") {
-          pushUntil(context, ParentsOnboardScreen());
-        }
+        // if (userRole == "TUTOR") {
+        //   pushUntil(context, TutorOnboardScreen());
+        // } else if (userRole == "PARENT") {
+        //   pushUntil(context, ParentsOnboardScreen());
+        // }
+        pushUntil(context, LogInScreen());
       } else {
         setState(() {
           isLoading = false;

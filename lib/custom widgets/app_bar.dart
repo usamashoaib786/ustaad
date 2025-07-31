@@ -33,16 +33,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             backArrow == true
                 ? InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Image.asset(
-                        "assets/images/arrowBack.png",
-                        height: 28,
-                      )),
-                )
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Image.asset(
+                          "assets/images/arrowBack.png",
+                          height: 28,
+                        )),
+                  )
                 : Align(
                     alignment: Alignment.center,
                     child: Image.asset("assets/images/ustaad.png"),
@@ -128,6 +128,41 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CustomAppBar1 extends StatelessWidget implements PreferredSizeWidget {
+  final String? title;
+  final bool? backArrow;
+
+  const CustomAppBar1({
+    super.key,
+    this.title,
+    this.backArrow,
+  });
+
+  @override
+  Size get preferredSize => Size.fromHeight(
+      backArrow == true ? 120 : 100); // Height of your custom AppBar
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      elevation: 0,
+      leading: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: InkWell(
+            borderRadius: BorderRadius.circular(24),
+            onTap: () => Navigator.pop(context),
+            child: Image.asset("assets/images/arrowBack.png")),
+      ),
+      title: AppText.appText(
+        "$title",
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+      ),
+      centerTitle: true,
     );
   }
 }

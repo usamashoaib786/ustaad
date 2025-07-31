@@ -34,8 +34,6 @@ class _ParentProfileScreenState extends State<ParentProfileScreen> {
     dio = AppDio(context);
     logger.init();
     getUserData();
-
-    // getProfile(context);
   }
 
   getUserData() async {

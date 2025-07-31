@@ -26,7 +26,7 @@ class _BottomNavViewState extends State<BottomNavView> {
           TutorDashBoardScreen(),
           TutorChatScreen(),
           TutorSessionScreen(),
-          TutorProfileScreen(),
+          TutorProfileScreen(isParentSide: false,),
         ]
       : const [
           ParentsDashBoardScreen(),

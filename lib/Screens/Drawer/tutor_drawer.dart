@@ -70,7 +70,7 @@ class _SideMenuDrawerState extends State<SideMenuDrawer> {
                           menuItem(
                               onTap: () {}, 'Help', "assets/images/help.png"),
                           menuItem(onTap: () {
-                            push(context, LoactionScreen());
+                            push(context, LocationScreen());
                           }, 'Location Selection',
                               "assets/images/location.png"),
                         ],

@@ -23,6 +23,10 @@ class AppUrls {
   static const String parentOnBoard = "parent/onboarding";
   static const String getChildren = "parent/children";
 
+  ////////////  Tutor Location ////////
+  static const String addLocation= "tutor/location";
+  static const String getLocations = "tutor/location";
+  static const String deleteLocation= "tutor/location";
   
   ////////////  Cost setting screen ////////
   static const String getcostsetting = "tutor/subject/settings";
@@ -30,4 +34,8 @@ class AppUrls {
   static const String editcostsetting = "tutor/subject/settings";
   ////////////  Chat APIs ////////
   static const String getAllChat = "chat/conversations";
+  ////////////  GET TUTORS ////////
+  static const String getTutor = "tutor/locations";
+  static const String getTutorProfileFromParentSide = "parent/tutor/";
+
 }

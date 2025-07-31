@@ -3,7 +3,9 @@ import 'package:ustaad/Helpers/app_text.dart';
 import 'package:ustaad/custom%20widgets/ratings.dart';
 
 class TutorReviews extends StatefulWidget {
-  const TutorReviews({super.key});
+  final bool isParentSide;
+  final Map<String, dynamic>? data;
+  const TutorReviews({super.key, required this.isParentSide, this.data});
 
   @override
   State<TutorReviews> createState() => _TutorReviewsState();

@@ -6,6 +6,8 @@ import 'package:ustaad/Helpers/app_theme.dart';
 import 'package:ustaad/Helpers/pref_keys.dart';
 import 'package:ustaad/Helpers/screen_size.dart';
 import 'package:ustaad/Helpers/toaster.dart';
+import 'package:ustaad/Helpers/utils.dart';
+import 'package:ustaad/Screens/Authentication/login_screen.dart';
 import 'package:ustaad/Screens/Teacher%20Screens/Profile/tutor_about.dart';
 import 'package:ustaad/Screens/Teacher%20Screens/Profile/tutor_educ.dart';
 import 'package:ustaad/Screens/Teacher%20Screens/Profile/tutor_exp.dart';
@@ -16,7 +18,12 @@ import 'package:ustaad/config/keys/urls.dart';
 import 'package:ustaad/custom widgets/ratings.dart';
 
 class TutorProfileScreen extends StatefulWidget {
-  const TutorProfileScreen({super.key});
+  final bool isParentSide;
+  final String? name;
+  final String? tutorId;
+
+  const TutorProfileScreen(
+      {super.key, required this.isParentSide, this.name, this.tutorId});
 
   @override
   State<TutorProfileScreen> createState() => _TutorProfileScreenState();
@@ -27,6 +34,7 @@ class _TutorProfileScreenState extends State<TutorProfileScreen> {
   bool isLoading = false;
   late AppDio dio;
   AppLogger logger = AppLogger();
+  Map<String, dynamic>? tutorData;
 
   String? name = "";
   String? userPic = "";
@@ -35,8 +43,13 @@ class _TutorProfileScreenState extends State<TutorProfileScreen> {
     super.initState();
     dio = AppDio(context);
     logger.init();
-    getUserData();
-
+    if (widget.isParentSide == false) {
+      getUserData();
+    }
+    if (widget.isParentSide == true) {
+      print("object${widget.tutorId}");
+      getTutorProfileFromParentSide(context: context, tutorId: widget.tutorId);
+    }
     // getProfile(context);
   }
 
@@ -58,10 +71,22 @@ class _TutorProfileScreenState extends State<TutorProfileScreen> {
     ];
 
     final List<Widget> tabContents = [
-      TutorAboutSection(),
-      TutorEducationScreen(),
-      TutorExperience(),
-      TutorReviews()
+      TutorAboutSection(
+        isParentSide: widget.isParentSide,
+        data: tutorData,
+      ),
+      TutorEducationScreen(
+        isParentSide: widget.isParentSide,
+        data: tutorData,
+      ),
+      TutorExperience(
+        isParentSide: widget.isParentSide,
+        data: tutorData,
+      ),
+      TutorReviews(
+        isParentSide: widget.isParentSide,
+        data: tutorData,
+      )
     ];
 
     return Scaffold(
@@ -121,7 +146,10 @@ class _TutorProfileScreenState extends State<TutorProfileScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                AppText.appText(name!,
+                                AppText.appText(
+                                    widget.isParentSide == true
+                                        ? "${widget.name}"
+                                        : name!,
                                     fontSize: 30,
                                     fontWeight: FontWeight.w500,
                                     textColor: AppTheme.black),
@@ -198,6 +226,7 @@ class _TutorProfileScreenState extends State<TutorProfileScreen> {
                             }),
                           ),
                         ),
+                        if(widget.isParentSide == false)
                         const SizedBox(height: 20),
                         tabContents[selectedTab]
                       ],
@@ -230,6 +259,48 @@ class _TutorProfileScreenState extends State<TutorProfileScreen> {
         setState(() {
           isLoading = false;
         });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        ToastHelper.displayErrorMotionToast(
+            context: context, msg: "${responseData["errors"][0]["message"]}");
+      }
+    } catch (e) {
+      ToastHelper.displayErrorMotionToast(
+          context: context, msg: "Something went wrong$e");
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  void getTutorProfileFromParentSide({context, tutorId}) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      Response response = await dio.get(
+        path: "${AppUrls.getTutorProfileFromParentSide}$tutorId",
+      );
+      var responseData = response.data;
+      if (response.statusCode == 200) {
+        setState(() {
+          tutorData = responseData["data"]; // 👈 Save the tutor data
+          isLoading = false;
+        });
+
+        ToastHelper.displaySuccessMotionToast(
+          context: context,
+          msg: "${responseData["message"]}",
+        );
+      } else if (response.statusCode == 401 &&
+          responseData["errors"][0]["message"] == "TokenExpired") {
+        ToastHelper.displayErrorMotionToast(
+            context: context, msg: "${responseData["errors"][0]["message"]}");
+
+        pushUntil(context, LogInScreen());
       } else {
         setState(() {
           isLoading = false;

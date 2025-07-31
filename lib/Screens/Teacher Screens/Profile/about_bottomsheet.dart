@@ -80,7 +80,10 @@ class _AddAboutBottomSheetState extends State<AddAboutBottomSheet> {
                   fontWeight: FontWeight.w600,
                 ),
                 const SizedBox(height: 10),
-                AppText.appText(widget.isEdit ?"Edit your experience":"Add relevant experience to your profile",
+                AppText.appText(
+                    widget.isEdit
+                        ? "Edit your experience"
+                        : "Add relevant experience to your profile",
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     textColor: Color(0xff4D5874)),
@@ -183,7 +186,13 @@ class _AddAboutBottomSheetState extends State<AddAboutBottomSheet> {
                         );
                         return;
                       }
-
+                      if (aboutText.length > 250) {
+                        ToastHelper.displayErrorMotionToast(
+                          context: context,
+                          msg: "About text cannot exceed 250 characters",
+                        );
+                        return;
+                      }
                       if (_grade <= 0) {
                         ToastHelper.displayErrorMotionToast(
                           context: context,

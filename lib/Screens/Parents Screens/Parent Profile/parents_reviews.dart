@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ustaad/Helpers/app_text.dart';
 import 'package:ustaad/Helpers/screen_size.dart';
-import 'package:ustaad/Screens/Parents%20Screens/Parent%20Profile/child_detail.dart';
+import 'package:ustaad/Models/child_detail_model.dart';
 
 class ParentsReviews extends StatefulWidget {
   const ParentsReviews({super.key});

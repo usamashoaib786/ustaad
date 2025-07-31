@@ -74,7 +74,7 @@ class _CustomAppTextFieldState extends State<CustomAppTextField> {
           border: InputBorder.none,
           contentPadding: widget.height != null
               ? const EdgeInsets.all(15)
-              : const EdgeInsets.all(8),
+              : const EdgeInsets.all(10),
           hintText: widget.texthint,
           hintStyle: widget.hintStyle ??
               TextStyle(
@@ -134,6 +134,7 @@ Widget parentHomeSearchField(context, controller) {
           padding: const EdgeInsets.all(10.0),
           child: Image.asset(
             "assets/images/search.png",
+            color: Color(0xffA6ADBF),
           ),
         ),
       ),
