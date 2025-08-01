@@ -1,24 +1,25 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ustaad/Helpers/pref_keys.dart';
+import 'package:ustaad/Helpers/toaster.dart';
+import 'package:ustaad/Screens/Authentication/login_screen.dart';
 import 'package:ustaad/config/dio/app_logger.dart';
+import 'package:ustaad/config/keys/global.dart';
 import 'package:ustaad/config/keys/headers.dart';
 import 'package:ustaad/config/keys/urls.dart';
-// import 'package:req_fun/req_fun.dart';
 
 class AppDioInterceptor extends Interceptor {
-  final BuildContext context;
   String token = "";
   final AppLogger _logger = AppLogger();
 
-  AppDioInterceptor(this.context) {
-    gettokenSharedPreferences();
+  AppDioInterceptor() {
+    getTokenSharedPreferences();
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    Map<String, dynamic> er = {
+    _logger.e({
       "type": err.type,
       "message": err.message,
       "status_code": err.response?.statusCode,
@@ -26,8 +27,7 @@ class AppDioInterceptor extends Interceptor {
       "headers": err.response?.headers,
       "data": err.response?.data,
       "response": err.response,
-    };
-    _logger.e(er);
+    });
 
     if (err.response != null) {
       handler.resolve(err.response!);
@@ -38,7 +38,7 @@ class AppDioInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    Map<String, dynamic> er = {
+    _logger.i({
       "base_url": response.requestOptions.baseUrl,
       "end_point": response.requestOptions.path,
       "method": response.requestOptions.method,
@@ -48,8 +48,20 @@ class AppDioInterceptor extends Interceptor {
       "data": response.data,
       "extra": response.extra,
       "response": response,
-    };
-    _logger.i(er);
+    });
+
+    if (response.statusCode == 401) {
+      ToastHelper.displayErrorMotionToast(
+        context: navigatorKey.currentContext!,
+        msg: response.statusMessage ?? "Unauthorized",
+      );
+
+      // Pop all routes and push login screen
+      navigatorKey.currentState!.pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => LogInScreen()),
+        (route) => false,
+      );
+    }
 
     handler.next(response);
   }
@@ -62,12 +74,12 @@ class AppDioInterceptor extends Interceptor {
 
     options.baseUrl = AppUrls.baseUrl;
     if (token.isNotEmpty) {
-      options.headers.addAll({RequestHeader.authorization: "Bearer $token",
+      options.headers.addAll({
+        RequestHeader.authorization: "Bearer $token",
       });
     }
 
-    // Add the 'branch' header
-    Map<String, dynamic> er = {
+    _logger.d({
       "base_url": options.baseUrl,
       "end_point": options.path,
       "method": options.method,
@@ -75,13 +87,12 @@ class AppDioInterceptor extends Interceptor {
       "params": options.queryParameters,
       "data": options.data,
       "extra": options.extra,
-    };
-    _logger.d(er);
+    });
 
     handler.next(options);
   }
 
-  void gettokenSharedPreferences() async {
+  void getTokenSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString(PrefKey.authorization) ?? "";
   }

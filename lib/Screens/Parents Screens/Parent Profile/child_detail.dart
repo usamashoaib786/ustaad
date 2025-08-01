@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ustaad/Helpers/app_button.dart';
@@ -24,10 +25,7 @@ class _ChildDetailsState extends State<ChildDetails> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      Provider.of<ParentProfileProvider>(context, listen: false)
-          .fetchChildren();
-    });
+ 
   }
 
   void populateFields(Child child) {
@@ -57,42 +55,58 @@ class _ChildDetailsState extends State<ChildDetails> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                width: 150,
-                height: 44,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xffD4D8E2)),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Center(
-                  child: DropdownButtonFormField<Child>(
-                    value: provider.selectedChild,
-                    icon: const Icon(Icons.keyboard_arrow_down),
-                    decoration: InputDecoration.collapsed(
-                      hintText: '',
-                    ),
-                    isExpanded: true,
-                    items: provider.children.map((child) {
-                      return DropdownMenuItem<Child>(
-                        value: child,
-                        child: Text(
-                          child.name,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 16),
+              Expanded(
+                child: Container(
+                  height: 44,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: const Color(0xffD4D8E2)),
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton2<Child>(
+                      value: provider.selectedChild,
+                      isExpanded: true,
+                      dropdownStyleData: DropdownStyleData(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.white,
                         ),
-                      );
-                    }).toList(),
-                    onChanged: (Child? value) {
-                      if (value != null) {
-                        provider.selectChild(value);
-                      }
-                    },
+                      ),
+                      onChanged: (Child? value) {
+                        if (value != null) {
+                          provider.selectChild(value);
+                        }
+                      },
+                      items: provider.children.map((child) {
+                        return DropdownMenuItem<Child>(
+                          value: child,
+                          child: Text(
+                            child.name,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      buttonStyleData: const ButtonStyleData(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        height: 44,
+                      ),
+                      iconStyleData: const IconStyleData(
+                        icon: Icon(Icons.keyboard_arrow_down),
+                      ),
+                      menuItemStyleData: const MenuItemStyleData(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                      ),
+                    ),
                   ),
                 ),
               ),
+              SizedBox(width: 40,),
               Align(
                   alignment: Alignment.centerRight,
                   child: AppButton.appButton(
@@ -130,6 +144,7 @@ class _ChildDetailsState extends State<ChildDetails> {
           customLableField(lable: "Class", controller: _gradeController),
           const SizedBox(height: 20),
           customLableField(lable: "Gender", controller: _genderController),
+          const SizedBox(height: 20),
         ],
       ),
     );

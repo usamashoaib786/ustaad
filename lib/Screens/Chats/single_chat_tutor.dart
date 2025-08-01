@@ -5,7 +5,7 @@ import 'package:ustaad/Helpers/app_theme.dart';
 import 'package:ustaad/Helpers/screen_size.dart';
 import 'package:ustaad/Screens/Chats/chat_modet.dart';
 
-class SingleTutorChatScreen extends StatelessWidget {
+class SingleChatScreen extends StatelessWidget {
   final List<ChatMessage> messages = [
     ChatMessage(text: "Hello! Jhon abraham", time: "09:25 AM", isMe: true),
     ChatMessage(text: "Hello ! Nazrul How are you?", time: "09:25 AM"),
@@ -15,7 +15,7 @@ class SingleTutorChatScreen extends StatelessWidget {
     ChatMessage(text: "", time: "09:25 AM", isMe: true, isVoice: true),
   ];
 
-  SingleTutorChatScreen({super.key});
+  SingleChatScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

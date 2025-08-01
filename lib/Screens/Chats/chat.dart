@@ -4,18 +4,18 @@ import 'package:ustaad/Helpers/app_field.dart';
 import 'package:ustaad/Helpers/app_text.dart';
 import 'package:ustaad/Helpers/utils.dart';
 import 'package:ustaad/Providers/all_chat_provider.dart';
-import 'package:ustaad/Screens/Drawer/tutor_drawer.dart';
 import 'package:ustaad/Screens/Chats/single_chat_tutor.dart';
+import 'package:ustaad/Screens/Drawer/tutor_drawer.dart';
 import 'package:ustaad/custom%20widgets/app_bar.dart';
 
-class TutorChatScreen extends StatefulWidget {
-  const TutorChatScreen({super.key});
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
 
   @override
-  State<TutorChatScreen> createState() => _TutorChatScreenState();
+  State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _TutorChatScreenState extends State<TutorChatScreen> {
+class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _search = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -87,7 +87,7 @@ class _TutorChatScreenState extends State<TutorChatScreen> {
                                   if (index == 0) const SizedBox(height: 20),
                                   InkWell(
                                     onTap: () {
-                                      push(context, SingleTutorChatScreen());
+                                      push(context, SingleChatScreen());
                                     },
                                     child: ChatTile(
                                       name: chat.name,

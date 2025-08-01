@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:ustaad/Helpers/app_button.dart';
 import 'package:ustaad/Helpers/app_text.dart';
 import 'package:ustaad/Helpers/app_theme.dart';
 import 'package:ustaad/Helpers/screen_size.dart';
+import 'package:ustaad/Providers/parent_profile_provider.dart';
 import 'package:ustaad/Screens/Authentication/auth_widgets.dart';
 
 class AddChildBottomSheet extends StatefulWidget {
@@ -20,6 +24,9 @@ class _AddChildBottomSheetState extends State<AddChildBottomSheet> {
   final TextEditingController schoolName = TextEditingController();
   final ImagePicker _picker = ImagePicker();
   String? selectedGender;
+  XFile? selectedImage;
+  bool isSubmitting = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -53,46 +60,88 @@ class _AddChildBottomSheetState extends State<AddChildBottomSheet> {
           width: ScreenSize(context).width,
           color: AppTheme.hintColor,
         ),
-     Expanded(
-       child: SingleChildScrollView(
-         child: Column(
-          children: [
-               buildChildForm(),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 20.0,
-                left: 20,
-                right: 20,
-              ),
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.teal,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 32, vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                buildChildForm(),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 20.0,
+                    left: 20,
+                    right: 20,
+                  ),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: ElevatedButton(
+                          onPressed: isSubmitting
+                              ? null
+                              : () async {
+                                  if (fullName.text.isEmpty ||
+                                      grade.text.isEmpty ||
+                                      age.text.isEmpty ||
+                                      schoolName.text.isEmpty ||
+                                      selectedGender == null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content:
+                                              Text("Please fill all fields.")),
+                                    );
+                                    return;
+                                  }
+
+                                  setState(() => isSubmitting = true);
+
+                                  try {
+                                    final provider =
+                                        Provider.of<ParentProfileProvider>(
+                                            context,
+                                            listen: false);
+                                    await provider.addChild(
+                                      fullName: fullName.text,
+                                      grade: grade.text,
+                                      age: age.text,
+                                      schoolName: schoolName.text,
+                                      gender: selectedGender!.toLowerCase(),
+                                      imageFile: selectedImage,
+                                    );
+                                    Navigator.pop(
+                                        context); // ✅ Close sheet on success
+                                  } catch (e) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text("Error adding child.")),
+                                    );
+                                  } finally {
+                                    setState(() => isSubmitting = false);
+                                  }
+                                },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.teal,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 32, vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: const Text(
+                            "Add",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600),
+                          ),
                         ),
-                      ),
-                      child: const Text(
-                        "Add",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            )
-         
-          ],
-         ),
-       ),
-     ) ],
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        )
+      ],
     );
   }
 
@@ -107,8 +156,10 @@ class _AddChildBottomSheetState extends State<AddChildBottomSheet> {
             children: [
               CircleAvatar(
                 radius: 45,
-                backgroundImage:
-                    const AssetImage("assets/images/user.png") as ImageProvider,
+                backgroundImage: selectedImage != null
+                    ? FileImage(File(selectedImage!.path))
+                    : const AssetImage("assets/images/user.png")
+                        as ImageProvider,
               ),
               Column(
                 children: [
@@ -205,8 +256,16 @@ class _AddChildBottomSheetState extends State<AddChildBottomSheet> {
 
   Future<void> _pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {}
+    if (pickedFile != null) {
+      setState(() {
+        selectedImage = pickedFile;
+      });
+    }
   }
 
-  void _deleteImage() {}
+  void _deleteImage() {
+    setState(() {
+      selectedImage = null;
+    });
+  }
 }

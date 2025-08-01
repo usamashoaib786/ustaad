@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ustaad/Helpers/app_text.dart';
 import 'package:ustaad/Helpers/app_theme.dart';
 import 'package:ustaad/Helpers/pref_keys.dart';
 import 'package:ustaad/Helpers/screen_size.dart';
+import 'package:ustaad/Providers/parent_profile_provider.dart';
 import 'package:ustaad/Screens/Parents%20Screens/Parent%20Profile/child_detail.dart';
 import 'package:ustaad/Screens/Parents%20Screens/Parent%20Profile/child_teacher_notes.dart';
 import 'package:ustaad/Screens/Parents%20Screens/Parent%20Profile/parents_reviews.dart';
@@ -34,6 +36,10 @@ class _ParentProfileScreenState extends State<ParentProfileScreen> {
     dio = AppDio(context);
     logger.init();
     getUserData();
+    Future.microtask(() {
+      Provider.of<ParentProfileProvider>(context, listen: false)
+          .fetchChildren();
+    });
   }
 
   getUserData() async {
@@ -51,6 +57,7 @@ class _ParentProfileScreenState extends State<ParentProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final List<String> tabTitles = ['Children', 'Teacher Notes', 'Reviews'];
+    final provider = Provider.of<ParentProfileProvider>(context);
 
     final List<Widget> tabContents = [
       ChildDetails(userId: userId!),
@@ -119,7 +126,8 @@ class _ParentProfileScreenState extends State<ParentProfileScreen> {
                                     fontSize: 30,
                                     fontWeight: FontWeight.w500,
                                     textColor: AppTheme.black),
-                                AppText.appText("2 children profiles",
+                                AppText.appText(
+                                    "${provider.children.length} children profiles",
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
                                     textColor: AppTheme.grey),

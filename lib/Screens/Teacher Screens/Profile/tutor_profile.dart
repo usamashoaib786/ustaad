@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ustaad/Helpers/app_button.dart';
 import 'package:ustaad/Helpers/app_text.dart';
 import 'package:ustaad/Helpers/app_theme.dart';
 import 'package:ustaad/Helpers/pref_keys.dart';
@@ -140,6 +141,16 @@ class _TutorProfileScreenState extends State<TutorProfileScreen> {
                             ],
                           ),
                         ),
+                        if(widget.isParentSide == true)
+
+                        
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20.0),
+                          child: AppButton.appButton(context: context, "Contact",height: 36.0),
+                        ),
+
+
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

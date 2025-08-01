@@ -10,6 +10,7 @@ import 'package:ustaad/Providers/tutor_about_provider.dart';
 import 'package:ustaad/Providers/tutor_education_provider.dart';
 import 'package:ustaad/Providers/tutor_exp_provider.dart';
 import 'package:ustaad/Providers/tutor_veirfy_provider.dart';
+import 'package:ustaad/config/keys/global.dart';
 import 'package:ustaad/splash_screen.dart';
 
 Future<void> main() async {
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ParentProfileProvider(context)),
       ],
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           appBarTheme: const AppBarTheme(
